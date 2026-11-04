@@ -2703,7 +2703,7 @@ body[data-not-sent] > #vis-container ~ #not-sent {
         <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
       </marker>
     </defs>
-  </svg><div id="vis-container"><h2 class="sr-only">Interactive dependency map of 27 MUDT platform assets in four layers; selecting an asset highlights what it depends on and what depends on it.</h2>
+  </svg><div id="vis-container"><h2 class="sr-only">Interactive dependency map of 31 MUDT platform assets and outcomes (team register IDs) in four layers; selecting an asset highlights what it depends on and what depends on it.</h2>
 <style>
 .lay{margin:0 0 14px}
 .lt{font-size:12px;color:var(--text-secondary);margin:0 0 6px}
@@ -2733,36 +2733,9 @@ body[data-not-sent] > #vis-container ~ #not-sent {
 <div class="lay"><p class="lt">Infrastructure, people and organisation</p><div class="row" id="l4"></div></div>
 <p id="info"></p>
 <script>
-const A={
-A01:['Funding',['A02']],
-A02:['Enrolment',['A03','A04','A08']],
-A03:['Reputation',['A04','A05','A06','A07','A08','A09']],
-A04:['Teaching service',['A05','A11','A12','A13','A14','A15','A16','A17','A18','A19','A20','A22','A23','A25']],
-A05:['Course materials',['A11','A12']],
-A06:['Student data',['A11','A12','A13','A24']],
-A07:['Grades',['A11','A12','A13','A24']],
-A08:['Official documents',['A11','A12','A13','A24','A26']],
-A09:['Reports',['A15','A20','A11']],
-A10:['Research data',['A11','A12']],
-A11:['Student systems',['A12','A22']],
-A12:['Identity',['A22']],
-A13:['Audit logging',['A11','A22']],
-A14:['MCP service',['A11','A12','A16']],
-A15:['Metadata API',['A12','A21','A22']],
-A16:['AI agents',['A17','A18','A19','A14','A15']],
-A17:['Orchestration',['A23']],
-A18:['LLM (Claude API)',['A21','A23']],
-A19:['Vector services',['A23']],
-A20:['Reporting service',['A15','A23']],
-A21:['Credentials',['A23']],
-A22:['Network and firewall',[]],
-A23:['Cloud environment',['A21']],
-A24:['Backups',['A11']],
-A25:['Lecturers',[]],
-A26:['Coordinators, admins',['A12']],
-A27:['Policies',[]]};
-const L={l1:['A01','A02','A03'],l2:['A04','A05','A06','A07','A08','A09','A10'],l3:['A11','A12','A13','A14','A15','A16','A17','A18','A19','A20','A21'],l4:['A22','A23','A24','A25','A26','A27']};
-let cur='A15';
+const A={"BO1": ["Funding", ["E01"]], "E01": ["Students / enrolment", ["E26", "BO2", "E23"]], "E26": ["Reputation", ["BO2", "E17", "E14", "E15", "E23", "E22"]], "BO2": ["Teaching service", ["E17", "S17", "S13", "E25", "S21", "S28", "S30", "S31", "S32", "S44", "S25", "S35", "S01", "S11"]], "E14": ["Student records", ["S17", "S13", "E25", "S26"]], "E15": ["Grades", ["S17", "S13", "E25", "S26"]], "E17": ["Course materials", ["S17", "S13"]], "E22": ["Reporting dataset", ["S28", "S44", "S17"]], "E23": ["Official documents", ["S17", "S13", "E25", "S26", "S07"]], "E24": ["Research data", ["S17", "S13"]], "E25": ["Audit logs", ["S17", "S25", "S22"]], "S01": ["Lecturers", []], "S07": ["System admins", ["S13"]], "S11": ["Web portal", ["S17", "S13", "S25", "S24"]], "S13": ["Identity (SSO)", ["S25", "S24"]], "S17": ["SIS", ["S13", "S25", "S18", "S24", "S23"]], "S18": ["Grade database", ["S25", "S24"]], "S21": ["MCP service", ["S17", "S13", "S24"]], "S22": ["SIEM", ["S25", "S24"]], "S23": ["Data storage", ["S25", "S24"]], "S24": ["Servers / VMs", ["S25"]], "S25": ["Network, firewall, DMZ", []], "S26": ["Backups", ["S18", "S23"]], "S28": ["Gateway + Metadata API", ["S13", "S29", "S25", "S24"]], "S29": ["Tokens and keys", ["S35"]], "S30": ["AI agents + orchestrator", ["S21", "S28", "S31", "S32", "S35"]], "S31": ["LLM provider", ["S29", "S35"]], "S32": ["Vector database", ["S35"]], "S35": ["Cloud tenant + key vault", []], "S42": ["Policies", []], "S44": ["Reporting dashboard", ["S28", "S35"]]};
+const L={"l1": ["BO1", "E01", "E26", "BO2"], "l2": ["E14", "E15", "E17", "E22", "E23", "E24", "E25"], "l3": ["S11", "S13", "S17", "S21", "S28", "S30", "S32", "S44"], "l4": ["S01", "S07", "S18", "S22", "S23", "S24", "S25", "S26", "S29", "S31", "S35", "S42"]};
+let cur='S28';
 function reach(id,dir,ind){
  const out=new Set();
  const next=x=>dir==='dep'?A[x][1]:Object.keys(A).filter(k=>A[k][1].includes(x));
